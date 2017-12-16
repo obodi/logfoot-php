@@ -4,5 +4,8 @@
   "version": "0.0.1",
   "autoload": {
     "psr-4": { "LogFoot": "src/LogFoot/" }
+  },
+  "require": {
+    "php": "^5.4.0"
   }
 }
