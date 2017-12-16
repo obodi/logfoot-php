@@ -13,6 +13,8 @@ class Client
     const LEVEL_WARNING = 'warning';
     const LEVEL_ERROR = 'error';
 
+    const TIMEOUT = 100000;
+
     public function __construct($project, $secret, $api = 'logfoot.obodi.eu')
     {
         $this->project = $project;
@@ -20,23 +22,27 @@ class Client
         $this->api = $api;
     }
 
-    public function post($subject, $content, $level = self::LEVEL_INFO)
+    public function post($subject, $context, $level = self::LEVEL_INFO, $timeout = self::TIMEOUT)
     {
         $data = json_encode(array(
             'secret' => $this->secret,
             'project' => $this->project,
             'subject' => $subject,
-            'context' => $content,
+            'context' => $context,
             'level' => $level
         ));
 
         // open a socket connection on port 80 - timeout: 30 sec
-        $fp = fsockopen($this->api, 443, $errno, $errstr, 30);
+        $fp = fsockopen(sprintf('ssl://%s', $this->api), 443, $errno, $errstr, 30);
 
         if ($fp) {
 
+            // set timeout
+            stream_set_timeout($fp, 0, $timeout);
+
             // send the request headers:
             fwrite($fp, "POST / HTTP/1.1\r\n");
+            fwrite($fp, sprintf("Host: %s\r\n", $this->api));
 
             fwrite($fp, "Content-type: application/json\r\n");
             fwrite($fp, "Content-length: " . strlen($data) . "\r\n");
