@@ -1,0 +1,8 @@
+{
+  "name": "obodi/logfoot-php",
+  "description": "LogFoot php client",
+  "version": "0.0.1",
+  "autoload": {
+    "psr-4": { "LogFoot": "src/LogFoot/" }
+  }
+}
