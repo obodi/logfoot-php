@@ -8,10 +8,13 @@ class Client
     private $project;
     private $secret;
 
-    const LEVEL_INFO = 'info';
     const LEVEL_DEBUG = 'debug';
+    const LEVEL_INFO = 'info';
+    const LEVEL_NOTICE = 'notice';
     const LEVEL_WARNING = 'warning';
     const LEVEL_ERROR = 'error';
+    const LEVEL_CRITICAL = 'critical';
+    const LEVEL_EMERGENCY = 'emergency';
 
     const TIMEOUT = 100000;
 
